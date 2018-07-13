@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Basic Vue</title>
+</head>
+
+<body>
+    <div id="app">
+        <template v-if="mostrar">
+        </template>
+
+        <div v-show="mostrar">
+            <h1>{{titulo|uppercase}}</h1>
+            <h2>{{subtitulo|lowercase|capitalize}}</h2>
+            <a :href="url" target="_blank">{{ pag }}</a>
+        </div>
+        <div v-show="!mostrar">
+            esto esta oculto
+        </div>
+
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script type="text/javascript">
+        let app = new Vue({
+            el: '#app',
+            data: {
+                pag: "Ir a Google",
+                url: "http://google.com",
+                mostrar: true,
+                titulo: 'eduard',
+                subtitulo: 'MAZO'
+            },
+            filters: {
+                uppercase: function (str) {
+                    return str.toUpperCase()
+                },
+                lowercase: function (str) {
+                    return str.toLowerCase()
+                },
+                capitalize: function (str) {
+                    return str.charAt(0).toUpperCase() + str.slice(1);
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
