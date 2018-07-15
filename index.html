@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Basic Vue</title>
+</head>
+
+<body>
+    <div id="app">
+        <template v-for="todo in curso">
+            <curso :todo="todo" @checked="selCurso">
+            </curso>
+        </template>
+        <form @submit.prevent="submit">
+            <button type="submit">send</button>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script type="text/javascript">
+        Vue.component('curso', {
+            props: ['todo'],
+            methods: {
+                onchange: function (ev) {
+                    this.$emit('checked', this.todo.value, ev.target.checked)
+                }
+            },
+            template: `
+            <div>
+                <input type="checkbox" :id="todo.value" :value="todo.value" @change="onchange">
+                <label :for="todo.value">{{todo.name}}</label> 
+            </div>
+            `
+        })
+
+        let app = new Vue({
+            el: '#app',
+            data: {
+                curso: [
+                    {
+                        name: 'Cami.js',
+                        value: 'vue'
+                    },
+                    {
+                        name: 'Sara.js',
+                        value: 'sue'
+                    },
+                    {
+                        name: 'Andrea.js',
+                        value: 'edu'
+                    },
+                    {
+                        name: 'Eduard.js',
+                        value: 'alf'
+                    },
+                ],
+                cursosel: []
+            },
+            filters: {
+                uppercase: function (str) {
+                    return str.toUpperCase();
+                }
+            },
+            methods: {
+                add: function () {
+                    this.contador++
+                },
+                remove: function () {
+                    this.contador--
+                },
+                submit: function () {
+                    console.log("submit")
+                    console.log(this.cursosel)
+                },
+                selCurso: function (curso, checked) {
+                    if (checked) {
+                        this.cursosel.push(curso)
+                    } else {
+                        let index = this.cursosel.indexOf(curso)
+                        this.cursosel.splice(index, 1)
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
